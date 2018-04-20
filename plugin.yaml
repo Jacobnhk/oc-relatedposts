@@ -1,0 +1,6 @@
+plugin:
+    name: 'bree7e.blogrelatedposts::lang.plugin.name'
+    description: 'bree7e.blogrelatedposts::lang.plugin.description'
+    author: 'Alexandr Vetrov'
+    icon: oc-icon-newspaper-o
+    homepage: ''
