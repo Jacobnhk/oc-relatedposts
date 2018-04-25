@@ -8,7 +8,8 @@ class Plugin extends PluginBase
      * @var array  Require the RainLab.Blog and PolloZen.MostVisited plugins
      */
     public $require = [
-        'RainLab.Blog'
+        'RainLab.Blog',
+        'PKleindienst.BlogSeries'
     ];
 
     /**
