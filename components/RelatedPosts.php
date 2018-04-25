@@ -15,6 +15,18 @@ class RelatedPosts extends ComponentBase
     public $postSlug;
 
     /**
+     * Reference to the page name for linking to posts.
+     * @var string
+     */
+    public $postPage;
+
+    /**
+     * Reference to the page name for linking to categories.
+     * @var string
+     */
+    public $categoryPage;    
+
+    /**
      * A collection of posts to display
      * @var Collection|null
      */
@@ -33,6 +45,18 @@ class RelatedPosts extends ComponentBase
     public function defineProperties()
     {
         return [
+            'categoryPage' => [
+                'title'       => 'rainlab.blog::lang.settings.posts_category',
+                'description' => 'rainlab.blog::lang.settings.posts_category_description',
+                'type'        => 'dropdown',
+                'default'     => 'blog/category',
+            ],
+            'postPage' => [
+                'title'       => 'rainlab.blog::lang.settings.posts_post',
+                'description' => 'rainlab.blog::lang.settings.posts_post_description',
+                'type'        => 'dropdown',
+                'default'     => 'blog/post',
+            ],            
             'postSlug' => [
                 'title'       => 'rainlab.blog::lang.settings.post_slug',
                 'description' => 'rainlab.blog::lang.settings.post_slug_description',
@@ -41,10 +65,23 @@ class RelatedPosts extends ComponentBase
             ]         
         ];
     }
+
+    public function getCategoryPageOptions()
+    {
+        return Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
+    }
+
+    public function getPostPageOptions()
+    {
+        return Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
+    }    
     
     protected function prepareVars()
     {
         $this->postSlug = $this->page['postSlug'] = $this->property('postSlug');
+         // Page links
+        $this->postPage = $this->page['postPage'] = $this->property('postPage');
+        $this->categoryPage = $this->page['categoryPage'] = $this->property('categoryPage');        
     }    
     
     public function onRun()
@@ -55,7 +92,7 @@ class RelatedPosts extends ComponentBase
     
     /**
      * Загрузка постов из категорий данной записи
-     * $this->postPage и $this->categoryPage создаются компонентами самого RainLab.Blog
+     * 
      * @return Collection
      */
     protected function loadRelatedPosts()
